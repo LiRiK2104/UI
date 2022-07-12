@@ -17,6 +17,6 @@ public class Healer : MonoBehaviour
 
     public void Heal()
     {
-        _player.Heal(this);
+        _player.Heal(_healPoints);
     }
 }

@@ -16,6 +16,6 @@ public class Damager : MonoBehaviour
 
     public void Attack()
     {
-        _player.TakeDamage(this);
+        _player.TakeDamage(_damage);
     }
 }

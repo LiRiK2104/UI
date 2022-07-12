@@ -14,27 +14,23 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _health = _maxHealth;
+        HealthChanged?.Invoke(this);
     }
 
-    public void TakeDamage(Damager damager)
+    public void TakeDamage(float damage)
     {
-        ChangeHealth(-damager.Damage);
+        ChangeHealth(-damage);
     }
 
-    public void Heal(Healer healer)
+    public void Heal(float healPoints)
     {
-        ChangeHealth(healer.HealPoints);
+        ChangeHealth(healPoints);
     }
 
     private void ChangeHealth(float points)
     {
         _health += points;
-        ClampHealth();
-        HealthChanged?.Invoke(this);
-    }
-
-    private void ClampHealth()
-    {
         _health = Mathf.Clamp(_health, 0, _maxHealth);
+        HealthChanged?.Invoke(this);
     }
 }

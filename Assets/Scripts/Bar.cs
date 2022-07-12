@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,19 +18,17 @@ public class Bar : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.HealthChanged += OnValueChanged;
-        OnValueChanged(_player);
-        HardSetSliderValue();
+        _player.HealthChanged += OnHealthChanged;
     }
 
     private void OnDisable()
     {
-        _player.HealthChanged -= OnValueChanged;
+        _player.HealthChanged -= OnHealthChanged;
     }
 
-    private void Update()
+    private void Start()
     {
-        _slider.value = Mathf.MoveTowards(_slider.value, _targetValue, Time.deltaTime);
+        HardSetSliderValue();
     }
 
     private void HardSetSliderValue()
@@ -36,8 +36,19 @@ public class Bar : MonoBehaviour
         _slider.value = _targetValue;
     }
     
-    private void OnValueChanged(Player player)
+    private void OnHealthChanged(Player player)
     {
         _targetValue = player.Health / player.MaxHealth;
+        StopCoroutine(UpdateBar());
+        StartCoroutine(UpdateBar());
+    }
+
+    private IEnumerator UpdateBar()
+    {
+        while (Mathf.Abs(_slider.value - _targetValue) > 0)
+        {
+            _slider.value = Mathf.MoveTowards(_slider.value, _targetValue, Time.deltaTime);
+            yield return null;
+        }
     }
 }
