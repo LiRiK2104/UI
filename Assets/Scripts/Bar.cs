@@ -36,9 +36,9 @@ public class Bar : MonoBehaviour
         _slider.value = _targetValue;
     }
     
-    private void OnHealthChanged(Player player)
+    private void OnHealthChanged()
     {
-        _targetValue = player.Health / player.MaxHealth;
+        _targetValue = _player.Health / _player.MaxHealth;
         StopCoroutine(UpdateBar());
         StartCoroutine(UpdateBar());
     }

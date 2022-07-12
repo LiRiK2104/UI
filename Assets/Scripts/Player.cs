@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
     private float _maxHealth = 100;
     private float _health;
 
-    public event Action<Player> HealthChanged;
+    public event Action HealthChanged;
     
     public float MaxHealth => _maxHealth;
     public float Health => _health;
@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _health = _maxHealth;
-        HealthChanged?.Invoke(this);
+        HealthChanged?.Invoke();
     }
 
     public void TakeDamage(float damage)
@@ -31,6 +31,6 @@ public class Player : MonoBehaviour
     {
         _health += points;
         _health = Mathf.Clamp(_health, 0, _maxHealth);
-        HealthChanged?.Invoke(this);
+        HealthChanged?.Invoke();
     }
 }
